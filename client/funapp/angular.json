@@ -26,9 +26,12 @@
               "src/styles.css",
               "node_modules/bootstrap/dist/css/bootstrap.css",
               "node_modules/bootstrap/dist/css/bootstrap-reboot.css",
-              "node_modules/bootstrap/dist/css/bootstrap-grid.css"
+              "node_modules/bootstrap/dist/css/bootstrap-grid.css",
+              "node_modules/material-design-icons/iconfont/material-icons.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "./node_modules/hammerjs/hammer.min.js"
+            ],
             "es5BrowserSupport": true
           },
           "configurations": {

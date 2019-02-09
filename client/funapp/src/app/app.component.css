@@ -1,0 +1,12 @@
+.example-container {
+  height: 750px;
+  overflow: auto;
+}
+
+.example-fill-remaining-space {
+  flex: 1 1 auto;
+}
+
+table {
+  width: 100%;
+}
