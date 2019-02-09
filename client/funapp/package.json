@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "concurrently \"npm run serve-api\" \"npm run serve\"",
+    "serve": "ng serve --proxy-config proxy.config.json",
+    "serve-api": "nodemon  --ignore ../funapp/ --ignore ../../server/venv/ --ignore node_modules/ --exec \"python3\" ../../server/server.py",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
