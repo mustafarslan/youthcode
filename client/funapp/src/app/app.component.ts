@@ -1,37 +1,16 @@
 import { Component } from '@angular/core';
+import { RestService } from './rest.service';
+import {map} from "rxjs/operators";
 
-export interface PeriodicElement {
-  groupNo: number;
+export interface StudentAnswer {
+  groupId: number;
   receivedTime: string;
-  question1: boolean;
-  question2: boolean;
-  question3: boolean;
+  questionNum: number;
   result: number
 }
 
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {groupNo: 1, receivedTime: new Date().toLocaleString(), question1: false, question2: false, question3: false, result: 0},
-  {groupNo: 2, receivedTime: new Date().toLocaleString(), question1: false, question2: false, question3: false, result: 0},
-  {groupNo: 3, receivedTime: new Date().toLocaleString(), question1: false, question2: false,  question3: false,result: 0},
-  {groupNo: 4, receivedTime: new Date().toLocaleString(), question1: false, question2: false,  question3: false, result: 0},
-  {groupNo: 5, receivedTime: new Date().toLocaleString(), question1: false, question2: false,  question3: false, result: 0},
-  {groupNo: 6, receivedTime: new Date().toLocaleString(), question1: false, question2: false,  question3: false, result: 0},
-  {groupNo: 7, receivedTime: new Date().toLocaleString(), question1: false, question2: false,  question3: false, result: 0},
-  {groupNo: 8, receivedTime: new Date().toLocaleString(), question1: false, question2: false,  question3: false, result: 0},
-  {groupNo: 9, receivedTime: new Date().toLocaleString(), question1: false, question2: false,  question3: false, result: 0},
-  {groupNo: 10, receivedTime: new Date().toLocaleString(), question1: false, question2: false,  question3: false, result: 0},
-  {groupNo: 11, receivedTime: new Date().toLocaleString(), question1: false, question2: false,   question3: false,result: 0},
-  {groupNo: 12, receivedTime: new Date().toLocaleString(), question1: false, question2: false,  question3: false, result: 0},
-  {groupNo: 13, receivedTime: new Date().toLocaleString(), question1: false, question2: false,  question3: false, result: 0},
-  {groupNo: 14, receivedTime: new Date().toLocaleString(), question1: false, question2: false,  question3: false, result: 0},
-  {groupNo: 15, receivedTime: new Date().toLocaleString(), question1: false, question2: false,  question3: false, result: 0},
-  {groupNo: 16, receivedTime: new Date().toLocaleString(), question1: false, question2: false,  question3: false, result: 0},
-  {groupNo: 17, receivedTime: new Date().toLocaleString(), question1: false, question2: false,  question3: false, result: 0},
-  {groupNo: 18, receivedTime: new Date().toLocaleString(), question1: false, question2: false,  question3: false, result: 0},
-  {groupNo: 19, receivedTime: new Date().toLocaleString(), question1: false, question2: false,  question3: false, result: 0},
-  {groupNo: 20, receivedTime: new Date().toLocaleString(), question1: false, question2: false,  question3: false, result: 0},
-
+const ELEMENT_DATA: StudentAnswer[] = [
 ];
 
 @Component({
@@ -41,6 +20,20 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class AppComponent {
   title = 'Youth Code';
-  displayedColumns: string[] = ['groupNo', 'receivedTime', 'question1', 'question2', 'question3', 'result'];
-  dataSource = ELEMENT_DATA;
+  answerList: any = [];
+  displayedColumns: string[] = ['groupId', 'receivedTime', 'questionNum', 'result'];
+
+  constructor(public rest:RestService) { }
+
+  ngOnInit() {
+        this.answerList = [];
+        this.getResultList();
+  }
+
+  getResultList() {
+    this.rest.getAnswers().subscribe(data => {
+      console.log(data);
+      this.answerList = data;
+    });
+  }
 }

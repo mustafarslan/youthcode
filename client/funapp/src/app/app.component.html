@@ -33,14 +33,14 @@
     <div class="col">
       <div class="card">
         <div class="example-container mat-elevation-z8">
-          <table mat-table [dataSource]="dataSource">
+          <table mat-table [dataSource]="answerList">
             <!--- Note that these columns can be defined in any order.
                   The actual rendered columns are set as a property on the row definition" -->
 
             <!-- Position Column -->
-            <ng-container matColumnDef="groupNo">
-              <th mat-header-cell *matHeaderCellDef> Group No. </th>
-              <td mat-cell *matCellDef="let element"> {{element.groupNo}} </td>
+            <ng-container matColumnDef="groupId">
+              <th mat-header-cell *matHeaderCellDef> Group Id. </th>
+              <td mat-cell *matCellDef="let element"> {{element.groupId}} </td>
             </ng-container>
 
               <!-- Name Column -->
@@ -50,21 +50,9 @@
             </ng-container>
 
             <!-- Name Column -->
-            <ng-container matColumnDef="question1">
-              <th mat-header-cell *matHeaderCellDef> Question #1 </th>
-              <td mat-cell *matCellDef="let element"> {{element.question1}} </td>
-            </ng-container>
-
-            <!-- Weight Column -->
-            <ng-container matColumnDef="question2">
-              <th mat-header-cell *matHeaderCellDef> Question #2 </th>
-              <td mat-cell *matCellDef="let element"> {{element.question2}} </td>
-            </ng-container>
-
-            <!-- Symbol Column -->
-            <ng-container matColumnDef="question3">
-              <th mat-header-cell *matHeaderCellDef> Question #3 </th>
-              <td mat-cell *matCellDef="let element"> {{element.question3}} </td>
+            <ng-container matColumnDef="questionNum">
+              <th mat-header-cell *matHeaderCellDef> Question # </th>
+              <td mat-cell *matCellDef="let element"> {{element.questionNum}} </td>
             </ng-container>
 
             <!-- Symbol Column -->

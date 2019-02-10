@@ -6,4 +6,8 @@ class CustomResponse(Response):
     def force_type(cls, rv, environ=None):
         if isinstance(rv, dict):
             rv = jsonify(rv)
+
+        if isinstance(rv, list):
+            rv = jsonify(rv)
+
         return super(CustomResponse, cls).force_type(rv, environ)
