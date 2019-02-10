@@ -21,7 +21,7 @@ def import_answer_class(name):
 @answers.route('/api/answer', methods=('GET', 'POST'))
 def handle_answers():
     if request.method == "POST":
-
+        response = {}
         file = request.files['file']
         filename_no_extension = file.filename.split(".")
         if file:
@@ -29,6 +29,11 @@ def handle_answers():
             file.save(full_file_path)
             class_path = "uploads." + filename_no_extension[0]
             module = import_answer_class(class_path)
-            return module.foo()
+            result = module.foo()
+            if result['result'] == 5:
+                response = {"message": "Correct answer!"}
+            else:
+                response = {"message": "Incorrect answer!"}
+            return response
     else:
         return {"message":"Hello World"}
