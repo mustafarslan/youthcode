@@ -46,6 +46,7 @@ import { AppComponent } from './app.component';
     MatPaginatorModule
   ],
   exports: [
+    HttpClientModule,
     MatChipsModule,
     MatTabsModule,
     MatDividerModule,
