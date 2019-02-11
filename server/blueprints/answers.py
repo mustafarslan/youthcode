@@ -1,4 +1,6 @@
 from flask import Blueprint, request
+from .AnswerBlueprint import AnswerBlueprint
+from importlib import reload
 import json
 import os
 import sys
@@ -14,9 +16,8 @@ sys.path.append(uploads_dir)
 sys.path.append(blueprint_dir)
 
 
-answers = Blueprint('answers', __name__)
+answers = AnswerBlueprint('answers', __name__)
 
-answerList = []
 
 
 def import_answer_class(name):
@@ -37,31 +38,35 @@ def handle_answers():
             full_file_path = os.path.join(uploads_dir, file.filename)
             file.save(full_file_path)
             class_path = "uploads." + filename_no_extension[0]
-            module = import_answer_class(class_path)
+            module = reload(__import__(class_path))
+            module = getattr(reload(module), filename_no_extension[0])
             result = module.foo()
-            os.remove(full_file_path)
+            print("result ")
+            print(result)
+            #os.remove(full_file_path)
 
-            consist = False
-
-            for item in answerList:
-                if result["groupId"] == item["groupId"]:
-                    consist = True
-                    item["questionNum"] = result["questionNum"]
-                    item["receivedTime"] = datetime.datetime.today().strftime("%X")
-                    item["result"] = result["result"]
+            answers_list = answers.get_answers()
+            print(answers_list)
+            if not any(item["groupId"] == result["groupId"] for item in answers_list):
+                result["receivedTime"] = datetime.datetime.today().strftime("%X")
+                answers_list.append(result)
+                answers.set_answers(answers_list)
+                print(answers_list)
             else:
-                obj = {}
-                obj["groupId"] = result["groupId"]
-                obj["questionNum"] = result["questionNum"]
-                obj["receivedTime"] = datetime.datetime.today().strftime("%X")
-                obj["result"] = result["result"]
-                print(obj)
-                answerList.append(obj)
-
+                print("in else")
+                for item in answers_list:
+                    if result["groupId"] == item["groupId"]:
+                        consist = True
+                        answers_list.remove(item)
+                        print("in for if")
+                        result["receivedTime"] = datetime.datetime.today().strftime("%X")
+                        answers_list.append(result)
+                        answers.set_answers(answers_list)
+                print(answers_list)
             if result['result'] == 5:
                 response = {"message": "Correct answer!"}
             else:
                 response = {"message": "Incorrect answer!"}
             return response
     else:
-        return answerList
+        return answers.get_answers()

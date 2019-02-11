@@ -5,7 +5,7 @@ import { map, catchError, tap } from 'rxjs/operators';
 
 
 
-const endpoint = 'http://192.168.163.129:5000/api/';
+const endpoint = 'http://192.168.205.129:5000/api/';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json'
@@ -25,7 +25,6 @@ export class RestService {
   }
 
   getAnswers(): Observable<any> {
-    const fiveSecondTimer = timer(0,5000);
     return timer(0,5000).pipe(_ =>this.http.get(endpoint + 'answer')).pipe(
       map(this.extractData));
   }

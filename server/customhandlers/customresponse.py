@@ -1,5 +1,5 @@
 from flask import Response, jsonify
-
+import json
 
 class CustomResponse(Response):
     @classmethod
@@ -8,6 +8,6 @@ class CustomResponse(Response):
             rv = jsonify(rv)
 
         if isinstance(rv, list):
-            rv = jsonify(rv)
+            rv = json.dumps(rv)
 
         return super(CustomResponse, cls).force_type(rv, environ)
