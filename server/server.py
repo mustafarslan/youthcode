@@ -39,9 +39,7 @@ class AnswerList(Resource):
         json_data = json.loads(data.decode('utf8').replace("'", '"'))
         item = db_collection.find({"groupId": json_data["groupId"]})
         temp = list(item)
-        print(temp)
         if len(temp) > 0:
-            print("in if")
             db_collection.delete_many({"groupId": json_data["groupId"]})
             obj = dict()
             obj["groupId"] = json_data["groupId"]
