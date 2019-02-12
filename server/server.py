@@ -22,7 +22,6 @@ app = Flask(__name__)
 CORS(app)
 
 app.response_class = CustomResponse
-app.config['UPLOAD_FOLDER'] = 'uploads/'
 
 
 myclient = pymongo.MongoClient("mongodb://localhost:27017")
@@ -38,20 +37,19 @@ class AnswerList(Resource):
 
     def post(self, data):
         json_data = json.loads(data.decode('utf8').replace("'", '"'))
-        print(json_data)
         item = db_collection.find({"groupId": json_data["groupId"]})
         temp = list(item)
-        if len(list(item)) > 0:
-            print("if")
-            print(json_data)
-            temp["groupId"] = json_data["groupId"]
-            temp["receivedTime"] = datetime.datetime.today().strftime("%X")
-            temp["result"] = json_data["result"]
-            temp["questionNum"] = json_data["questionNum"]
-            db_collection.insert_one(temp)
+        print(temp)
+        if len(temp) > 0:
+            print("in if")
+            db_collection.delete_many({"groupId": json_data["groupId"]})
+            obj = dict()
+            obj["groupId"] = json_data["groupId"]
+            obj["receivedTime"] = datetime.datetime.today().strftime("%X")
+            obj["result"] = json_data["result"]
+            obj["questionNum"] = json_data["questionNum"]
+            db_collection.insert_one(obj)
         else:
-            print("else")
-            print(json_data)
             obj = dict()
             obj["groupId"] = json_data["groupId"]
             obj["receivedTime"] = datetime.datetime.today().strftime("%X")
