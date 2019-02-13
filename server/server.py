@@ -37,10 +37,10 @@ class AnswerList(Resource):
 
     def post(self, data):
         json_data = json.loads(data.decode('utf8').replace("'", '"'))
-        item = db_collection.find({"groupId": json_data["groupId"]})
+        item = db_collection.find({"groupId": json_data["groupId"], "questionNum": json_data["questionNum"]})
         temp = list(item)
         if len(temp) > 0:
-            db_collection.delete_many({"groupId": json_data["groupId"]})
+            db_collection.delete_many({"groupId": json_data["groupId"], "questionNum": json_data["questionNum"]})
             obj = dict()
             obj["groupId"] = json_data["groupId"]
             obj["receivedTime"] = datetime.datetime.today().strftime("%X")

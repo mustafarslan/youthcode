@@ -19,6 +19,7 @@ const ELEMENT_DATA: StudentAnswer[] = [
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
   title = 'Youth Code';
   answerList: any = [];
   displayedColumns: string[] = ['groupId', 'receivedTime', 'questionNum', 'result'];
