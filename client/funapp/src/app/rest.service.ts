@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import {interval, Observable, of, timer} from 'rxjs';
-import { map, catchError, tap } from 'rxjs/operators';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {interval, Observable, of,} from 'rxjs';
+import { map } from 'rxjs/operators';
 
 
 
@@ -25,8 +25,7 @@ export class RestService {
   }
 
   getAnswers(): Observable<any> {
-    return timer(0,5000).pipe(_ =>this.http.get(endpoint + 'answer')).pipe(
-      map(this.extractData));
+    return interval(5000).pipe( map(() => this.http.get(endpoint + 'answer')));
   }
 
   private handleError<T> (operation = 'operation', result?: T) {
